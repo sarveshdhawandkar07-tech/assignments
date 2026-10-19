@@ -1,3 +1,4 @@
+# Merge K linked lists
 class Node:
     def __init__(self,data,next):
         self.data = data
@@ -57,7 +58,7 @@ class LinkedList:
     def merge_k_lists(self,lists):
         merged_head = self.merge2lists(lists[0],lists[1])
         for i in range(2,len(lists)):
-            self.merge2lists(merged_head,lists[i])
+            merged_head = self.merge2lists(merged_head,lists[i])
         return merged_head
         
     
@@ -66,10 +67,10 @@ ll2 = LinkedList()
 ll3 = LinkedList()
 ll4 = LinkedList()
 mergedlist = LinkedList()
-ll1.insert_array([1,3,4,6])
-ll2.insert_array([1,5,6,8])
-ll3.insert_array([8,9])
-ll4.insert_array([10,11,12])
+ll1.insert_array([5,6])
+ll2.insert_array([7,8])
+ll3.insert_array([1,2])
+ll4.insert_array([9,10])
 ll1.print_ll()
 ll2.print_ll()
 ll3.print_ll()
