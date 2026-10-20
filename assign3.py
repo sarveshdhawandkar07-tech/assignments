@@ -8,15 +8,17 @@ class LinkedList:
         self.head = None
     
     def insert_at_end(self,insert_data):
+        new_node = Node(insert_data,None)
         if not self.head:
-            self.head = Node(insert_data,None)
+            self.head = new_node
+            new_node.next = self.head
             return
         itr = self.head
-        while itr:
-            if not itr.next:
-                itr.next = Node(insert_data,None)
-                return
+        while itr.next != self.head:
             itr = itr.next
+        itr.next = new_node
+        new_node.next = self.head
+        return
             
     def print_ll(self):
         if not self.head:
@@ -33,50 +35,22 @@ class LinkedList:
                 hashset.add(itr)
             itr = itr.next
         print(str_ll)
-    
-    def make_circular(self):
-        if not self.head:
-            print("List is Empty")
-            return
-        itr = self.head
-        while itr:
-            if not itr.next:
-                itr.next = self.head
-                return
-            itr = itr.next
-    
-    def get_length_circular(self):
-        count = 0
-        if not self.head:
-            return count
-        hashset = set()
-        itr = self.head
-        while itr:
-            if itr in hashset:
-                return count
-            else:
-                hashset.add(itr)
+
+    def distort(self,position):
+        if self.head is None:
+            return 
+        last = self.head
+        while last.next != self.head:
+            last = last.next
+        target = self.head
+        count = 1
+        while count < position:
+            target = target.next
             count += 1
-            itr = itr.next
-    
-    def connect_to_intermediate(self):
-        if not self.head:
-            print("List is Empty")
-            return
-        length = self.get_length_circular()
-        middle = length//2 + 1
-        count = 0
-        itr = self.head
-        while itr:
-            count += 1
-            if count == middle:
-                middle_node = itr 
-            elif count == length:
-                itr.next = middle_node
-                return
-            itr = itr.next
-    
-    def relinking(self):
+        last.next = target
+
+
+    def relinking(self): # Brute Force
         if not self.head:
             print("List is Empty")
             return 
@@ -89,7 +63,29 @@ class LinkedList:
             else:
                 hashset.add(itr)
             itr =  itr.next
-                
+
+    def relinking_updated(self): #  Floyde's cycle finding algorithm
+        slow = self.head
+        fast = self.head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow is fast:
+                break
+        else:
+            return
+
+        slow = self.head
+        last = None
+        while slow is not fast:
+            slow = slow.next
+            last = fast
+            fast = fast.next
+
+        if last is None:
+            return
+        last.next = self.head
+
     
             
 ll = LinkedList()
@@ -99,10 +95,7 @@ ll.insert_at_end("C")
 ll.insert_at_end("D")
 ll.insert_at_end("E")
 ll.print_ll()
-ll.make_circular()
+ll.distort(3)
 ll.print_ll()
-print(ll.get_length_circular())
-ll.connect_to_intermediate()
-ll.print_ll()
-ll.relinking()
+ll.relinking_updated()
 ll.print_ll()
