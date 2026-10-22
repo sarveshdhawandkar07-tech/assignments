@@ -36,3 +36,32 @@ while stack:
 
 
 print(postfix)
+
+
+# Evaluation of postfix expression
+postfix = input("Enter the postfix expression :")
+stack = []
+result = 0
+for char in postfix.split():
+    if char.isalnum():
+        stack.append(char)
+    elif char in '+-/*^':
+        if len(stack)  >=2:
+            result = 0
+            op2 = int(stack.pop())
+            op1 = int(stack.pop())
+            if char == '+':
+                result = (op1+op2)
+            elif char == '-':
+                result = (op1-op2)
+            elif char == '*':
+                result = (op1*op2)
+            elif char == '/':
+                result = (op1/op2)
+            else:
+                result = (op1**op2)
+            stack.append(result)
+if len(stack)==1:
+    print(result)
+else:
+    print('Invalid Expression')
