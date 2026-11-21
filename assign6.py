@@ -20,41 +20,16 @@ def insert(root,val):
         
     return root
 
-# Path Searching
-def search_path(root,val):
-    path = []
-    curr = root
-    
-    while curr is not None:
-        path.append(curr.data)
-        
-        if val == curr.data:
-            return path
-        elif val < curr.data:
-            curr = curr.left
+# Finding the least common ancestor
+def LCA(root,n1,n2):
+    while root:
+        if n1 < root.data and n2 < root.data:
+            root = root.left
+        elif n1 > root.data and n2 > root.data:
+            root = root.right
         else:
-            curr = curr.right
-    return path
-
-# Finding the least Common Ancestor
-def find_lca(root,n1,n2):
-    arr1 = []
-    arr2 = []
-    arr1 = search_path(root,n1)
-    arr2 = search_path(root,n2)
-    l3 = []
-    i = 0
-    j = 0
-    while i < len(arr1) and j<len(arr2):
-        if arr1[i] != arr2[j]:
-            break
-        l3.append(arr1[i])
-        i += 1
-        j += 1
-    if l3:
-        return l3[-1]
-    else:
-        return None
+            return root.data
+    return None
 
 # Main Function
 root = None
