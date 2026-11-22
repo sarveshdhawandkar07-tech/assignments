@@ -19,7 +19,7 @@ print(nCr((n-1)*2,n-1))
 
 # Finding the actual paths
 def find_paths(n,row,col,path,paths):
-    if row == n-1  or col == n-1:
+    if row == n-1  and col == n-1:
         paths.append(path)
         return
 
